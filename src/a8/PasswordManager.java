@@ -71,7 +71,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
         }
 
 
-        return 4;
+        return 0;
     }
     /**
      * Returns a Set of all the keys (websites) contained in this map.
