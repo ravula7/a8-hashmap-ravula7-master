@@ -83,9 +83,9 @@ public class PasswordManager<K,V> implements Map<K,V> {
     public int size() {
         int count = 0;
         for(int i = 0; i<_passwords.length;i++){
+            Account temp = _passwords[i];
             if(_passwords[i]!=null){
-                count ++;
-                Account temp = _passwords[i];
+                count++;
                 while(temp.getNext()!=null){
                     count++;
                 }
