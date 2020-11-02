@@ -22,10 +22,143 @@ public class PasswordManager<K,V> implements Map<K,V> {
      */
     @Override
     public void put(K key, V value) {
-        Account<K,V> account = new Account<>(key,value); //creates an account object using the passed key value pair
+        int hashKey = Math.abs(key.hashCode() % 50); //calculate hashKey (to place account at this index)
+        if (_passwords[hashKey] == null) {  //if there is nothing at the hashKey,
+            _passwords[hashKey] = new Account(key, value); //create a new node
+        }
+
+        else { //else - there is something at the hashKey
+            Account temp = _passwords[hashKey]; //use temp account object so you are not overwriting whatever data is in the array at that hashKey
+            //use a while loop to traverse all entries until there is _next == null for an account meaning we have reached the end
+            while (temp.getNext() != null) {
+                //if the key matches the account's key, update the value - password being updated for a website
+                if (temp.getWebsite().equals(key)) {
+                    temp.setPassword(value);
+                }
+                //else - chain to the tail
+                else {
+                    temp.setNext(new Account(key, value));
+                    //temp = temp.getNext();
+                    // Account temp = new Account(key, value);
+                }
+                _passwords[hashKey] = temp;
+            }
+        }
+
+/*
+            //use a while loop through go through all the entries until both the conditions are false - that way you are able to traverse through every single entry that is at the index
+            //first condition is when the account's _next isn't null - it is pointing to another node, so there is something after that
+            //second condition is when the account's key doesn't equal the key passed
+            while (account.getNext() != null && !account.getWebsite().equals(key))
+                account = account.getNext();
+                if (account.getWebsite().equals(key)) {
+                    account.setPassword(value);
+                } else
+                    account.setNext(new Account(key, value));
+            }
+        }
+
+        /*else {
+            while(_passwords[hashKey] != null) {
+
+            }
+
+
+        }
+
+
+
+    }
+
+    Account account = new Account(key,value); //first node has been created
+
+account.setWebsite(key);
+            account.setPassword(value);
+            account.setNext(null);
+    _passwords[hashKey] = account;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        int index = Math.abs(key.hashCode() % 50); //hash is calculated
+        Account items = _passwords[index]; //set that index in _passwords array as Account of items - could be empty or non-empty accounts
+
+        if(items == null) { //if there is nothing at the index (no accounts exist)
+            items = new Account(key,value); //create a new node/account object there
+
+            Account item = new Account(key,value); //a temporary account to store the new account object
+
+            items.setNext(item); //set the next as
+
+            _passwords[index] = items;
+        }
+        else {
+            while(_passwords[index]!=null) {
+                if(_passwords[index].equals(key)) {
+                    _passwords[index] = items;
+
+                }
+            }
+
+            Account item = new Account(key,value);
+
+            items.setNext(item);
+        }
+
+
+
+
+
+
+
 
         //calculate hash function to find the appropriate index
         int hashKey = Math.abs(key.hashCode()) % 50; //want to insert account at this index
+        Account accounts = _passwords[hashKey]; //created a node at the hashKey
+        //new Account<>(key,value); //creates an account object using the passed key value pair
+
+        if(accounts == null){
+            accounts = new Account <K,V> (key,value);
+
+            Account account = new Account(key,value);
+
+            accounts.setNext(account);
+            _passwords[hashKey] = accounts;
+        }
+        else{
+            for(Account account: accounts){
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if(_passwords[hashKey] == null){ //when the hashKey has empty linked list
             _passwords[hashKey] = account;
         }
@@ -142,6 +275,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
         }
 
  */
+
 
     }
 

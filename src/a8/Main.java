@@ -9,7 +9,15 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Map<String,String> passwordManager = new PasswordManager<>();
+        Account account1 = new Account("facebook","no");
+        Account account2 = new Account("webkinz","yes");
+        Account account3 = new Account("facebook","again");
+        Account account4 = new Account("facebook","okay");
+        //System.out.println(_passwords.put(account1));
 
+
+
+/*
         boolean enter = false;
         while(enter == false){
             System.out.println("Enter password:");
@@ -44,6 +52,8 @@ public class Main {
             }
 
         }
+
+ */
         // your code below
     }
 }
