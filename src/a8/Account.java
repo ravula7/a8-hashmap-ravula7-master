@@ -1,6 +1,6 @@
 package a8;
 
-public class Account <K,V> {
+public class Account <K,V> { //a node in a linked list
     private K _website;
     private V _password;
     private Account _next;

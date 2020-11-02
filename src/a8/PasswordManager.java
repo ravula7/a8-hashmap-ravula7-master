@@ -7,7 +7,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
     private Account[] _passwords;
     public PasswordManager() {
        // Account[]
-         _passwords = new Account[50]; //array of type account --> can use all account methods
+         _passwords = new Account[50]; //array of account type --> can use all account methods
     }
 
 
@@ -26,14 +26,21 @@ public class PasswordManager<K,V> implements Map<K,V> {
 
         //calculate hash function to find the appropriate index
         int hashKey = Math.abs(key.hashCode()) % 50; //want to insert account at this index
+        if(_passwords[hashKey] == null){ //when the hashKey has empty linked list
+            _passwords[hashKey] = account;
+        }
+        else {
+            while (_passwords[hashKey] != null) { //when the hashKey has non-empty linked list - run through it - traverse the list
 
-        while(_passwords[hashKey] != null) { //when the hashKey has non-empty linked list
-            if(_passwords[hashKey].equals(key)) { //if key already exists, update the value
-                Account temp = _passwords[hashKey];
-                temp = temp.getNext();
-            }
-            else { //if key doesn't exist, then add the account to the end of the list
-                _passwords[hashKey] = account;
+                if (_passwords[hashKey].equals(key)) { //if key already exists, update the value
+
+
+                    Account temp = _passwords[hashKey]; //store whatever is at the key already to temp
+
+                    temp.setNext(account);
+                } else { //if key doesn't exist, then add the account to the end of the list
+
+                }
             }
         }
 
@@ -53,27 +60,6 @@ public class PasswordManager<K,V> implements Map<K,V> {
             emptyList.add(account);
             _passwords[hashKey] = emptyList;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -160,17 +146,42 @@ public class PasswordManager<K,V> implements Map<K,V> {
     }
 
     // TODO: get
+    /**
+     * Returns the value associated with the given key.
+     * This operation should have O(1) runtime.
+     * If the key is not in the array, return null.
+     * @param key
+     * @return the value (password) associated with that key
+     */
     @Override
     public V get(K key) {
+        for(int i = 0; i<_passwords.length; i++){
+            if((K) _passwords[i] == key) {
+                return (V) _passwords[i];
+            }
+        }
         return null;
     }
-
+    /**
+     * Returns the number of key-value mappings in the map.
+     * @return the number of accounts in the map.
+     */
     // TODO: size
     @Override
     public int size() {
+        for(int i = 0; i<_passwords.length;i++){
+
+
+        }
+
+
         return 0;
     }
-
+    /**
+     * Returns a Set of all the keys (websites) contained in this map.
+     *
+     * @return A set of the keys contained in the map
+     */
     // TODO: keySet
     @Override
     public Set<K> keySet() {
