@@ -13,7 +13,6 @@ public class Main {
         Account account2 = new Account("webkinz","yes");
         Account account3 = new Account("facebook","again");
         Account account4 = new Account("facebook","okay");
-        //System.out.println(_passwords.put(account1));
 
 
 
