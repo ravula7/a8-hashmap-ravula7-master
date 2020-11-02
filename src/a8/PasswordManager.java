@@ -22,24 +22,40 @@ public class PasswordManager<K,V> implements Map<K,V> {
      */
     @Override
     public void put(K key, V value) {
-        Account <K,V> account = new Account<>(key,value); //new account to add into hash table
-        int hashKey = Math.abs(key.hashCode())%50; //calculate where to insert the account
+        Account<K, V> account = new Account<>(key, value); //new account to add into hash table
+        int hashKey = 0;//Math.abs(key.hashCode())%50; //calculate where to insert the account
         Account temp = _passwords[hashKey]; //store whatever is at _passwords
-        if(temp == null) { //if there is nothing there
+        if (_passwords[hashKey] == null) { //if there is nothing there
             _passwords[hashKey] = account; //add the account
         }
-       else { //if there is something there
-            while(temp.getNext()!= null) { //traverse through the list
-                if(temp.getWebsite().equals(key)) { //in case there is a key match
+        else if (_passwords[hashKey].getWebsite().equals(key)) {
+            _passwords[hashKey].setPassword(value);
+        }
+        else { //if there is something there
+            while (temp.getNext() != null) {
+                if (temp.getWebsite().equals(key)) { //in case there is a key match
                     temp.setPassword(value); //update the password
-                }
-                else{
+                    break;
+                } else {
                     temp = temp.getNext();
                 }
             }
-            temp.setNext(account);
-       }
+            if (temp.getNext() == null) {
+                if (temp.getWebsite().equals(key)) {
+                    temp.setPassword(value);
+                }
+                _passwords[hashKey].setNext(account);
+            }
+        }
     }
+/*
+               else{
+               while(_passwords[hashKey]!= null) { //traverse through the list //or temp.getNext() null?
+                   temp = temp.getNext();
+               }
+               temp.setNext(account);
+           }     */
+
 
     // TODO: get
     /**
@@ -65,13 +81,15 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: size
     @Override
     public int size() {
+        int count = 0;
         for(int i = 0; i<_passwords.length;i++){
-
-
+            if(_passwords[i]!=null){
+                while(_passwords[i].getNext()!=null){
+                    count++;
+                }
+            }
         }
-
-
-        return 0;
+        return count;
     }
     /**
      * Returns a Set of all the keys (websites) contained in this map.
