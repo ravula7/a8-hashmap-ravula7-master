@@ -28,6 +28,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
         Account temp = _passwords[hashKey]; //store whatever is at _passwords
         if (_passwords[hashKey] == null) { //if there is nothing there
             _passwords[hashKey] = account; //add the account
+            size++;
         }
         else if (_passwords[hashKey].getWebsite().equals(key)) {
             _passwords[hashKey].setPassword(value);
@@ -45,10 +46,12 @@ public class PasswordManager<K,V> implements Map<K,V> {
                 if (temp.getWebsite().equals(key)) {
                     temp.setPassword(value);
                 }
-                _passwords[hashKey].setNext(account);
+                else {
+                    _passwords[hashKey].setNext(account);
+                    size++;
+                }
             }
         }
-        size++;
     }
 /*
                else{
