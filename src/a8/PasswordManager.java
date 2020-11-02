@@ -23,7 +23,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
     @Override
     public void put(K key, V value) {
         Account<K, V> account = new Account<>(key, value); //new account to add into hash table
-        int hashKey = 0;//Math.abs(key.hashCode())%50; //calculate where to insert the account
+        int hashKey = Math.abs(key.hashCode())%50; //calculate where to insert the account
         Account temp = _passwords[hashKey]; //store whatever is at _passwords
         if (_passwords[hashKey] == null) { //if there is nothing there
             _passwords[hashKey] = account; //add the account
