@@ -5,6 +5,7 @@ import java.util.*;
 public class PasswordManager<K,V> implements Map<K,V> {
     private static final String MASTER_PASSWORD = "YOUR PASSWORD HERE";
     private Account[] _passwords;
+    public int size;
     public PasswordManager() {
        // Account[]
          _passwords = new Account[50]; //array of account type --> can use all account methods
@@ -47,6 +48,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
                 _passwords[hashKey].setNext(account);
             }
         }
+        size++;
     }
 /*
                else{
@@ -81,7 +83,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: size
     @Override
     public int size() {
-        int count = 0;
+        /*int count = 0;
         for(int i = 0; i<_passwords.length;i++){
             Account temp = _passwords[i];
             if(_passwords[i]!=null){
@@ -91,7 +93,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
                 }
             }
         }
-        return count;
+         */
+        return size;
 
     }
     /**
@@ -119,6 +122,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
         temp.setWebsite(null);
         temp.setPassword(null);
 
+
+        size--;
         return null;
     }
 
