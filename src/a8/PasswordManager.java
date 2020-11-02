@@ -81,7 +81,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: size
     @Override
     public int size() {
-        int count = 0;
+        /*int count = 0;
         for(int i = 0; i<_passwords.length;i++){
             if(_passwords[i]!=null){
                 while(_passwords[i].getNext()!=null){
@@ -90,6 +90,9 @@ public class PasswordManager<K,V> implements Map<K,V> {
             }
         }
         return count;
+
+         */
+        return 0;
     }
     /**
      * Returns a Set of all the keys (websites) contained in this map.
