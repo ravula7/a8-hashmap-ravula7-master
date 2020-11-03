@@ -163,20 +163,22 @@ public class PasswordManager<K,V> implements Map<K,V> {
         }
         else {
             if(_passwords[hashKey].equals(key)){ //checks for the first node
-                _passwords[hashKey] = _passwords[hashKey].getNext();
+                _passwords[hashKey] = _passwords[hashKey].getNext(); //overwrite the value with the next
             }
             while (temp != null) { //checks for the remaining nodes
-                if (temp.getWebsite().equals(key)) {
-                    password = temp.getPassword();
-                    if (temp.getNext() == null) {
-                        _passwords[hashKey] =null;//temp = null;
-                        break;
+                if (temp.getWebsite().equals(key)) { //when you find the key
+                    password = temp.getPassword(); //need to return the value there, so storing it
+                    //next steps before you break to fix up the list:
+                    if (temp.getNext() == null) { //if you have reached the end of the list
+                        _passwords[hashKey] = null; //make the last key and value null because there is nothing there anymore and no next to link it to
+                        break; //done!
                     }
-                    else {
-                        temp = temp.getNext();
+                    else { //if you haven't reached the end of the list
+                        //need to link the temp to the key and value after what was removed
+                        temp.setNext((temp.getNext()).getNext()); //so getNext used twice-overwrote
                     }
                 }
-                else {
+                else { //if you didn't find the key yet, go to the next and continue the while loop
                     temp = temp.getNext();
                 }
             }
