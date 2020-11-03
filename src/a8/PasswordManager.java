@@ -36,7 +36,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
                 if (temp.getWebsite().equals(key)) { //in case there is a key match
                     temp.setPassword(value); //update the password
                     break;
-                } else {
+                }
+                else { //go to next
                     temp = temp.getNext();
                 }
             }
@@ -69,13 +70,27 @@ public class PasswordManager<K,V> implements Map<K,V> {
      */
     @Override
     public V get(K key) {
-        for(int i = 0; i<_passwords.length; i++){
+        int hashKey = Math.abs(key.hashCode()) % 50; //calculate where to insert the account
+        Account temp = _passwords[hashKey];
+        while (temp != null) {
+            if (temp.getWebsite().equals(key)) {
+                return (V) temp.getPassword();
+            }
+            temp = temp.getNext();
+        }
+        return null;
+    }
+
+
+        /*for(int i = 0; i<_passwords.length; i++){
             if((K) _passwords[i] == key) {
                 return (V) _passwords[i];
             }
         }
         return null;
-    }
+
+         */
+
     /**
      * Returns the number of key-value mappings in the map.
      * @return the number of accounts in the map.
@@ -115,14 +130,14 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: remove
     @Override
     public V remove(K key) {
-        int hashKey = Math.abs(key.hashCode()) % 50; //calculate where to remove from
-        Account<K, V> temp = _passwords[hashKey]; //entries at _passwords[hashKey]
-        V password = null; //password is first null and is what will be returned
-        if (temp == null) { //if there is nothing in the _passwords[hashKey]
+        int hashKey = Math.abs(key.hashCode()) % 50;
+        Account<K, V> temp = _passwords[hashKey];
+        V password = null;
+        if (temp == null) {
             return null;
         }
-        else { //if it's not empty
-            if(_passwords[hashKey].equals(key)){ //if the first node is equal to the key
+        else {
+            if(_passwords[hashKey].equals(key)){
                 _passwords[hashKey] = _passwords[hashKey].getNext();
             }
             while (temp != null) {
@@ -131,11 +146,12 @@ public class PasswordManager<K,V> implements Map<K,V> {
                     if (temp.getNext() == null) {
                         temp = null;
                         break;
-                    } else {
+                    }
+                    else {
                         temp = temp.getNext();
                     }
-
-                } else {
+                }
+                else {
                     temp = temp.getNext();
                 }
             }
