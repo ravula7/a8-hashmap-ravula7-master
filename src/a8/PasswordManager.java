@@ -143,7 +143,15 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: keySet
     @Override
     public Set<K> keySet() {
-        return null;
+        HashSet set = new HashSet();
+        for(int i = 0; i < _passwords.length;i++){
+            Account temp = _passwords[i];
+            while (temp != null) {
+                set.add(temp.getWebsite());
+                temp = temp.getNext();
+            }
+        }
+        return set;
     }
     /**
      * Removes the Key and value pair from the map
@@ -197,8 +205,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: checkDuplicate
     @Override
     public List<K> checkDuplicate(V value) {
-
-        return null;
+        ArrayList arrayList = new ArrayList();
+        return arrayList;
     }
 
     // TODO: checkMasterPassword
