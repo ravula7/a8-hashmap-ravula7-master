@@ -166,14 +166,17 @@ public class PasswordManager<K,V> implements Map<K,V> {
         int hashKey = Math.abs(key.hashCode()) % 50;
         Account<K, V> temp = _passwords[hashKey];
         V password = null;
+
         if (temp == null) {
             return password;
         }
+
         else if (temp.getWebsite().equals(key)) {
             password = (V) temp.getPassword();
             return password;
-        } else {
-            while (!temp.getNext().equals(null)) {
+        }
+        else {
+            while (temp.getNext()!=null) {
                 if (temp.getNext().getWebsite().equals(key)) {
                     password = (V) temp.getNext().getPassword();
                     temp.setNext(temp.getNext().getNext());
