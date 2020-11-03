@@ -3,7 +3,7 @@ package a8;
 import java.util.*;
 
 public class PasswordManager<K,V> implements Map<K,V> {
-    private static final String MASTER_PASSWORD = "YOUR PASSWORD HERE";
+    private static final String MASTER_PASSWORD = "PASSWORD";
     private Account[] _passwords;
     public PasswordManager() {
        // Account[]
@@ -259,6 +259,9 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: checkMasterPassword
     @Override
     public boolean checkMasterPassword(String enteredPassword) {
+        if(enteredPassword.equals(MASTER_PASSWORD)){
+            return true;
+        }
         return false;
     }
 
