@@ -22,6 +22,29 @@ public class PasswordManager<K,V> implements Map<K,V> {
      */
     @Override
     public void put(K key, V value) {
+        Account account = new Account<>(key,value);
+        int hashKey = Math.abs(key.hashCode()) % 50; //calculate where to insert the account
+        Account temp = _passwords[hashKey];
+        if(temp == null){
+            _passwords[hashKey] = account;
+        }
+        else{
+            while(temp.getNext() !=null){
+                if(temp.getWebsite().equals(key)){
+                    temp.setPassword(value);
+                    return;
+                }
+                temp = temp.getNext();
+            }
+            if(temp.getWebsite().equals(key)){
+                temp.setPassword(value);
+            }
+            else{
+                temp.setNext(account);
+            }
+        }
+
+        /*
         Account<K, V> account = new Account<>(key, value); //new account to add into hash table
         int hashKey = Math.abs(key.hashCode())%50; //calculate where to insert the account
         Account temp = _passwords[hashKey]; //store whatever is at _passwords
@@ -50,6 +73,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
                 }
             }
         }
+
+         */
     }
 /*
                else{
