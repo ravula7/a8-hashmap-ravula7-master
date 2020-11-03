@@ -164,6 +164,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
         else {
             if(_passwords[hashKey].equals(key)){ //checks for the first node
                 _passwords[hashKey] = _passwords[hashKey].getNext(); //overwrite the value with the next
+                return (V) _passwords[hashKey].getPassword(); //return the password
             }
             while (temp != null) { //checks for the remaining nodes
                 if (temp.getWebsite().equals(key)) { //when you find the key
@@ -176,7 +177,6 @@ public class PasswordManager<K,V> implements Map<K,V> {
                     else { //if you haven't reached the end of the list
                         //need to link the temp to the key and value after what was removed
                         temp.setNext((temp.getNext()).getNext()); //so getNext used twice-overwrote
-                        break;
                     }
                 }
                 else { //if you didn't find the key yet, go to the next and continue the while loop
