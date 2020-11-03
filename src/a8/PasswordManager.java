@@ -159,7 +159,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
         Account<K, V> temp = _passwords[hashKey];
         V password = null;
         if (temp == null) {
-            return null;
+            return password;
         }
         else {
             if(_passwords[hashKey].equals(key)){ //checks for the first node
@@ -169,6 +169,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
             while (temp != null) { //checks for the remaining nodes
                 if (temp.getWebsite().equals(key)) { //when you find the key
                     password = temp.getPassword(); //need to return the value there, so storing it
+
                     //next steps before you break to fix up the list:
                     if (temp.getNext() == null) { //if you have reached the end of the list
                         _passwords[hashKey] = null; //make the last key and value null because there is nothing there anymore and no next to link it to
