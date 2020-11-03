@@ -168,7 +168,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
         V password = null;
         if (temp == null) {
             return password;
-        } else if (temp.getWebsite().equals(key)) {
+        }
+        else if (temp.getWebsite().equals(key)) {
             password = (V) temp.getPassword();
             return password;
         } else {
@@ -201,12 +202,6 @@ public class PasswordManager<K,V> implements Map<K,V> {
 
             return password;
         }
-
-
-
-
-
-
         else {
             if(temp.getWebsite().equals(key)){ //checks for the first node
                 _passwords[hashKey] = _passwords[hashKey].getNext(); //overwrite the value with the next
@@ -250,7 +245,7 @@ public class PasswordManager<K,V> implements Map<K,V> {
             Account temp = _passwords[i];
             while (temp != null) {
                 if (temp.getPassword().equals(value)) {
-                    dupList.add(temp.getPassword());
+                    dupList.add(temp.getWebsite());
                 }
                 temp = temp.getNext();
             }
