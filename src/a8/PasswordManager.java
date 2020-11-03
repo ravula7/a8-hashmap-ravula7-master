@@ -205,8 +205,17 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: checkDuplicate
     @Override
     public List<K> checkDuplicate(V value) {
-        ArrayList arrayList = new ArrayList();
-        return arrayList;
+        ArrayList dupList = new ArrayList();
+        for(int i = 0; i < _passwords.length;i++){
+            Account temp = _passwords[i];
+            while (temp != null) {
+                if (temp.getPassword().equals(value)) {
+                    dupList.add(temp.getPassword());
+                }
+                temp = temp.getNext();
+            }
+        }
+       return dupList;
     }
 
     // TODO: checkMasterPassword
