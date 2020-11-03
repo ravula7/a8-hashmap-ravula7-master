@@ -177,7 +177,6 @@ public class PasswordManager<K,V> implements Map<K,V> {
                     }
                     else { //if you haven't reached the end of the list
                         //need to link the temp to the key and value after what was removed
-                        temp = temp.getNext();
                         temp.setNext((temp.getNext()).getNext()); //so getNext used twice-overwrote
                     }
                 }
