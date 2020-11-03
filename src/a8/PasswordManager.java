@@ -168,14 +168,42 @@ public class PasswordManager<K,V> implements Map<K,V> {
         V password = null;
         if (temp == null) {
             return password;
+        } else if (temp.getWebsite().equals(key)) {
+            password = (V) temp.getPassword();
+            return password;
+        } else {
+            while (!temp.getNext().equals(null)) {
+                if (temp.getNext().getWebsite().equals(key)) {
+                    password = (V) temp.getNext().getPassword();
+                    temp.setNext(temp.getNext().getNext());
+                    return password;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return password;
+    }
+           /* //check for first node to see if key matches it
+            if(_passwords[hashKey].equals(key)) {
+                _passwords[hashKey] = _passwords[hashKey].getNext();
+                return (V) _passwords[hashKey].getPassword();
+            }
+            //check for remaining nodes to see if key matches
+            else {
+                while (temp.getNext() != null) {
+                    if (temp.getWebsite().equals(key)) {
+                        password = temp.getPassword();
+                        temp.setNext(temp.getNext());
+                    }
+                }
+            }
         }
 
-// 3. Since an Account object exists, check each one and see if the key
-// matches. We need to keep up with the current account and the one
-// before it, since Account objects only keep up with the "next" node in a list.
-// 4. If I find the account, there are a few cases to deal with depending on where it is in how to remove it.
-// 5. Decrease the size field by 1 if it's found and return the removed password.
-// 6. Return null if the key is not found.
+            return password;
+        }
+
+
+
 
 
 
@@ -205,6 +233,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
             return password;
         }
     }
+
+            */
     /**
      * Returns a list the website names
      * that have a password matching the parameter
