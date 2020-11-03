@@ -169,8 +169,18 @@ public class PasswordManager<K,V> implements Map<K,V> {
         if (temp == null) {
             return password;
         }
+
+// 3. Since an Account object exists, check each one and see if the key
+// matches. We need to keep up with the current account and the one
+// before it, since Account objects only keep up with the "next" node in a list.
+// 4. If I find the account, there are a few cases to deal with depending on where it is in how to remove it.
+// 5. Decrease the size field by 1 if it's found and return the removed password.
+// 6. Return null if the key is not found.
+
+
+
         else {
-            if(temp.equals(key)){ //checks for the first node
+            if(temp.getWebsite().equals(key)){ //checks for the first node
                 _passwords[hashKey] = _passwords[hashKey].getNext(); //overwrite the value with the next
                 return (V) _passwords[hashKey].getPassword(); //return the password
             }
