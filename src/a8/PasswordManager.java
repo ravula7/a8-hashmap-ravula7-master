@@ -162,14 +162,14 @@ public class PasswordManager<K,V> implements Map<K,V> {
             return null;
         }
         else {
-            if(_passwords[hashKey].equals(key)){
+            if(_passwords[hashKey].equals(key)){ //checks for the first node
                 _passwords[hashKey] = _passwords[hashKey].getNext();
             }
-            while (temp != null) {
+            while (temp != null) { //checks for the remaining nodes
                 if (temp.getWebsite().equals(key)) {
                     password = temp.getPassword();
                     if (temp.getNext() == null) {
-                        temp = null;
+                        _passwords[hashKey] =null;//temp = null;
                         break;
                     }
                     else {
