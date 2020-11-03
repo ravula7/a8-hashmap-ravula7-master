@@ -14,6 +14,9 @@ public class Main {
         passwordManager.put("webkinz", "what");
         passwordManager.put("insta", "never");
         System.out.println(passwordManager.size());
+        System.out.println(passwordManager.remove("insta"));
+        System.out.println(passwordManager.remove("facebook"));
+        System.out.println(passwordManager.remove("webkinz"));
        /* Account account1 = new Account("facebook","no");
         Account account2 = new Account("webkinz","yes");
         Account account3 = new Account("facebook","again");
