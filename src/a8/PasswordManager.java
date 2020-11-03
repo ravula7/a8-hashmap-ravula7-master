@@ -5,7 +5,6 @@ import java.util.*;
 public class PasswordManager<K,V> implements Map<K,V> {
     private static final String MASTER_PASSWORD = "YOUR PASSWORD HERE";
     private Account[] _passwords;
-    public int size;
     public PasswordManager() {
        // Account[]
          _passwords = new Account[50]; //array of account type --> can use all account methods
@@ -28,9 +27,8 @@ public class PasswordManager<K,V> implements Map<K,V> {
         Account temp = _passwords[hashKey]; //store whatever is at _passwords
         if (_passwords[hashKey] == null) { //if there is nothing there
             _passwords[hashKey] = account; //add the account
-            size++;
         }
-        else if (_passwords[hashKey].getWebsite().equals(key)) {
+        else if (_passwords[hashKey].getWebsite().equals(key)) { //size doesn't update because just replacing the password
             _passwords[hashKey].setPassword(value);
         }
         else { //if there is something there
@@ -48,7 +46,6 @@ public class PasswordManager<K,V> implements Map<K,V> {
                 }
                 else {
                     _passwords[hashKey].setNext(account);
-                    size++;
                 }
             }
         }
@@ -86,19 +83,17 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: size
     @Override
     public int size() {
-        /*int count = 0;
-        for(int i = 0; i<_passwords.length;i++){
-            Account temp = _passwords[i];
-            if(_passwords[i]!=null){
-                count++;
-                while(temp.getNext()!=null){
+        int count = 0;
+        for(int i = 0; i<_passwords.length;i++) {
+            if (_passwords[i] != null) {
+                Account temp = _passwords[i];
+                while (temp != null) {
                     count++;
+                    temp = temp.getNext();
                 }
             }
         }
-         */
-        return size;
-
+        return count;
     }
     /**
      * Returns a Set of all the keys (websites) contained in this map.
@@ -120,19 +115,44 @@ public class PasswordManager<K,V> implements Map<K,V> {
     // TODO: remove
     @Override
     public V remove(K key) {
-        int hashKey = Math.abs(key.hashCode())%50; //calculate where to remove from
-        Account temp = _passwords[hashKey];
-        temp.setWebsite(null);
-        temp.setPassword(null);
+        int hashKey = Math.abs(key.hashCode()) % 50; //calculate where to remove from
+        Account<K, V> temp = _passwords[hashKey]; //entries at _passwords[hashKey]
+        V password = null; //password is first null and is what will be returned
+        if (temp == null) { //if there is nothing in the _passwords[hashKey]
+            return null;
+        }
+        else { //if it's not empty
+            if(_passwords[hashKey].equals(key)){ //if the first node is equal to the key
+                _passwords[hashKey] = _passwords[hashKey].getNext();
+            }
+            while (temp != null) {
+                if (temp.getWebsite().equals(key)) {
+                    password = temp.getPassword();
+                    if (temp.getNext() == null) {
+                        temp = null;
+                        break;
+                    } else {
+                        temp = temp.getNext();
+                    }
 
-
-        size--;
-        return null;
+                } else {
+                    temp = temp.getNext();
+                }
+            }
+            return password;
+        }
     }
-
+    /**
+     * Returns a list the website names
+     * that have a password matching the parameter
+     *
+     * @return A List containing the keys of accounts whose password
+     * match the parameter
+     */
     // TODO: checkDuplicate
     @Override
     public List<K> checkDuplicate(V value) {
+
         return null;
     }
 
